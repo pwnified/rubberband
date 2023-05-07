@@ -76,6 +76,7 @@ public:
     void setKeyFrameMap(const std::map<size_t, size_t> &);
 
     size_t getSamplesRequired() const;
+    size_t getInputFramesBuffered() const;
 
     void study(const float *const *input, size_t samples, bool final);
     void process(const float *const *input, size_t samples, bool final);

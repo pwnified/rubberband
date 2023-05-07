@@ -1226,6 +1226,12 @@ R2Stretcher::getSamplesRequired() const
     
     return reqd;
 }    
+	
+size_t
+R2Stretcher::getInputFramesBuffered() const {
+    return m_channelData[0]->inbuf->getReadSpace();
+}
+
 
 void
 R2Stretcher::process(const float *const *input, size_t samples, bool final)

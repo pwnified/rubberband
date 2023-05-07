@@ -633,6 +633,11 @@ R3Stretcher::getSamplesRequired() const
     }
 }
 
+size_t
+R3Stretcher::getInputFramesBuffered() const {
+    return m_parameters.channels > 0 ? m_channelData[0]->inbuf->getReadSpace() : 0;
+}
+
 void
 R3Stretcher::setMaxProcessSize(size_t n)
 {

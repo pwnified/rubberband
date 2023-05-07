@@ -241,6 +241,15 @@ public:
         else return m_r3->getSamplesRequired();
     }
 
+    RTENTRY__
+    size_t
+    getInputFramesBuffered() const
+    {
+        if (m_r2) return m_r2->getInputFramesBuffered();
+        else return m_r3->getInputFramesBuffered();
+    }
+
+
     void
     study(const float *const *input, size_t samples,
           bool final)
@@ -505,6 +514,13 @@ RubberBandStretcher::getSamplesRequired() const
     return m_d->getSamplesRequired();
 }
 
+RTENTRY__
+size_t
+RubberBandStretcher::getInputFramesBuffered() const
+{
+    return m_d->getInputFramesBuffered();
+}
+	
 void
 RubberBandStretcher::study(const float *const *input, size_t samples,
                            bool final)

@@ -838,7 +838,14 @@ public:
      * @see getStartDelay
      */
      size_t getSamplesRequired() const;
+    
+    
+    /**
+     Number of samples in the input buffer
+     */
+    size_t getInputFramesBuffered() const;
 
+    
     /**
      * Provide a set of mappings from "before" to "after" sample
      * numbers so as to enforce a particular stretch profile.  The

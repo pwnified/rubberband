@@ -81,6 +81,7 @@ public:
     
     void study(const float *const *input, size_t samples, bool final);
     size_t getSamplesRequired() const;
+    size_t getInputFramesBuffered() const;
     void process(const float *const *input, size_t samples, bool final);
     int available() const;
     size_t retrieve(float *const *output, size_t samples) const;
