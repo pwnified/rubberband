@@ -12,7 +12,7 @@
 #define ERROR 1
 #define WARNING 2
 #define INFO 3
-#define DEBUG 4
+#define xDEBUG 4
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
@@ -29,7 +29,7 @@
 #define KISS_FFT_ERROR(...) KISS_FFT_LOG_MSG(ERROR, __VA_ARGS__)
 #define KISS_FFT_WARNING(...) KISS_FFT_LOG_MSG(WARNING, __VA_ARGS__)
 #define KISS_FFT_INFO(...) KISS_FFT_LOG_MSG(INFO, __VA_ARGS__)
-#define KISS_FFT_DEBUG(...) KISS_FFT_LOG_MSG(DEBUG, __VA_ARGS__)
+#define KISS_FFT_DEBUG(...) KISS_FFT_LOG_MSG(xDEBUG, __VA_ARGS__)
 
 
 

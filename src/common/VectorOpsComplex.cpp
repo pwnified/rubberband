@@ -23,7 +23,7 @@
 
 #include "VectorOpsComplex.h"
 
-#include "system/sysutils.h"
+#include "common/sysutils.h"
 
 #include <cassert>
 

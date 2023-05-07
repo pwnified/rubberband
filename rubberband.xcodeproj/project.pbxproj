@@ -1,0 +1,631 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A45DD31429AF46AE00220389 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2C529AF46AD00220389 /* resample.c */; };
+		A45DD31529AF46AE00220389 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2C929AF46AD00220389 /* kiss_fft.c */; };
+		A45DD31629AF46AE00220389 /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2CA29AF46AD00220389 /* kiss_fftr.c */; };
+		A45DD31729AF46AE00220389 /* RubberBandStretcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2D229AF46AD00220389 /* RubberBandStretcher.cpp */; };
+		A45DD31829AF46AE00220389 /* rubberband-c.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2D329AF46AD00220389 /* rubberband-c.cpp */; };
+		A45DD31929AF46AE00220389 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2D629AF46AD00220389 /* Thread.cpp */; };
+		A45DD31A29AF46AE00220389 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2D729AF46AD00220389 /* Log.cpp */; };
+		A45DD31B29AF46AE00220389 /* Profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2DA29AF46AD00220389 /* Profiler.cpp */; };
+		A45DD31C29AF46AE00220389 /* Allocators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2DC29AF46AD00220389 /* Allocators.cpp */; };
+		A45DD31D29AF46AE00220389 /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2DE29AF46AD00220389 /* FFT.cpp */; };
+		A45DD31E29AF46AE00220389 /* mathmisc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2DF29AF46AD00220389 /* mathmisc.cpp */; };
+		A45DD31F29AF46AE00220389 /* StretchCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2E729AF46AD00220389 /* StretchCalculator.cpp */; };
+		A45DD32129AF46AE00220389 /* BQResampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2EF29AF46AD00220389 /* BQResampler.cpp */; };
+		A45DD32229AF46AE00220389 /* sysutils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2F129AF46AD00220389 /* sysutils.cpp */; };
+		A45DD32329AF46AE00220389 /* Resampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2F329AF46AD00220389 /* Resampler.cpp */; };
+		A45DD32529AF46AE00220389 /* StretcherChannelData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2F729AF46AD00220389 /* StretcherChannelData.cpp */; };
+		A45DD32629AF46AE00220389 /* HighFrequencyAudioCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2FA29AF46AD00220389 /* HighFrequencyAudioCurve.cpp */; };
+		A45DD32729AF46AE00220389 /* PercussiveAudioCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2FC29AF46AE00220389 /* PercussiveAudioCurve.cpp */; };
+		A45DD32829AF46AE00220389 /* StretcherProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2FD29AF46AE00220389 /* StretcherProcess.cpp */; };
+		A45DD32929AF46AE00220389 /* R2Stretcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2FF29AF46AE00220389 /* R2Stretcher.cpp */; };
+		A45DD32A29AF46AE00220389 /* AudioCurveCalculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD30029AF46AE00220389 /* AudioCurveCalculator.cpp */; };
+		A45DD32B29AF46AE00220389 /* SilentAudioCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD30329AF46AE00220389 /* SilentAudioCurve.cpp */; };
+		A45DD32C29AF46AE00220389 /* CompoundAudioCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD30529AF46AE00220389 /* CompoundAudioCurve.cpp */; };
+		A45DD32D29AF489D00220389 /* R3Stretcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2AB29AF46AD00220389 /* R3Stretcher.cpp */; };
+		A45DD32F29AF51BC00220389 /* VectorOpsComplex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A45DD2EC29AF46AD00220389 /* VectorOpsComplex.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A47BA1F61CE3265300AC1507 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A45DD2A529AF468700220389 /* RubberBandStretcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RubberBandStretcher.h; sourceTree = "<group>"; };
+		A45DD2A629AF468700220389 /* rubberband-c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "rubberband-c.h"; sourceTree = "<group>"; };
+		A45DD2A929AF46AD00220389 /* Guide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Guide.h; sourceTree = "<group>"; };
+		A45DD2AA29AF46AD00220389 /* PhaseAdvance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhaseAdvance.h; sourceTree = "<group>"; };
+		A45DD2AB29AF46AD00220389 /* R3Stretcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = R3Stretcher.cpp; sourceTree = "<group>"; usesTabs = 0; };
+		A45DD2AC29AF46AD00220389 /* BinSegmenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinSegmenter.h; sourceTree = "<group>"; };
+		A45DD2AD29AF46AD00220389 /* R3Stretcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R3Stretcher.h; sourceTree = "<group>"; usesTabs = 0; };
+		A45DD2AE29AF46AD00220389 /* Peak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Peak.h; sourceTree = "<group>"; };
+		A45DD2AF29AF46AD00220389 /* BinClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinClassifier.h; sourceTree = "<group>"; };
+		A45DD2B129AF46AD00220389 /* TestResampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestResampler.cpp; sourceTree = "<group>"; };
+		A45DD2B229AF46AD00220389 /* TestStretchCalculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestStretchCalculator.cpp; sourceTree = "<group>"; };
+		A45DD2B329AF46AD00220389 /* TestVectorOps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestVectorOps.cpp; sourceTree = "<group>"; };
+		A45DD2B429AF46AD00220389 /* TestVectorOpsComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestVectorOpsComplex.cpp; sourceTree = "<group>"; };
+		A45DD2B529AF46AD00220389 /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
+		A45DD2B629AF46AD00220389 /* TestSignalBits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestSignalBits.cpp; sourceTree = "<group>"; };
+		A45DD2B729AF46AD00220389 /* TestStretcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestStretcher.cpp; sourceTree = "<group>"; };
+		A45DD2B829AF46AD00220389 /* TestAllocators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestAllocators.cpp; sourceTree = "<group>"; };
+		A45DD2B929AF46AD00220389 /* TestFFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFFT.cpp; sourceTree = "<group>"; };
+		A45DD2BA29AF46AD00220389 /* TestBinClassifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestBinClassifier.cpp; sourceTree = "<group>"; };
+		A45DD2BD29AF46AD00220389 /* float_cast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = float_cast.h; sourceTree = "<group>"; };
+		A45DD2BF29AF46AD00220389 /* getopt_long.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = getopt_long.c; sourceTree = "<group>"; };
+		A45DD2C029AF46AD00220389 /* unistd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unistd.h; sourceTree = "<group>"; };
+		A45DD2C129AF46AD00220389 /* getopt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getopt.h; sourceTree = "<group>"; };
+		A45DD2C229AF46AD00220389 /* getopt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = getopt.c; sourceTree = "<group>"; };
+		A45DD2C429AF46AD00220389 /* speex_resampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_resampler.h; sourceTree = "<group>"; };
+		A45DD2C529AF46AD00220389 /* resample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resample.c; sourceTree = "<group>"; };
+		A45DD2C629AF46AD00220389 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		A45DD2C829AF46AD00220389 /* kiss_fft_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft_log.h; sourceTree = "<group>"; };
+		A45DD2C929AF46AD00220389 /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
+		A45DD2CA29AF46AD00220389 /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
+		A45DD2CB29AF46AD00220389 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
+		A45DD2CC29AF46AD00220389 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
+		A45DD2CD29AF46AD00220389 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		A45DD2CE29AF46AD00220389 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
+		A45DD2D029AF46AD00220389 /* neon_mathfun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_mathfun.h; sourceTree = "<group>"; };
+		A45DD2D129AF46AD00220389 /* sse_mathfun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sse_mathfun.h; sourceTree = "<group>"; };
+		A45DD2D229AF46AD00220389 /* RubberBandStretcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RubberBandStretcher.cpp; sourceTree = "<group>"; usesTabs = 0; };
+		A45DD2D329AF46AD00220389 /* rubberband-c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "rubberband-c.cpp"; sourceTree = "<group>"; };
+		A45DD2D529AF46AD00220389 /* FFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFT.h; sourceTree = "<group>"; };
+		A45DD2D629AF46AD00220389 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
+		A45DD2D729AF46AD00220389 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
+		A45DD2D829AF46AD00220389 /* BQResampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQResampler.h; sourceTree = "<group>"; };
+		A45DD2D929AF46AD00220389 /* mathmisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mathmisc.h; sourceTree = "<group>"; };
+		A45DD2DA29AF46AD00220389 /* Profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Profiler.cpp; sourceTree = "<group>"; };
+		A45DD2DB29AF46AD00220389 /* StretchCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StretchCalculator.h; sourceTree = "<group>"; };
+		A45DD2DC29AF46AD00220389 /* Allocators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Allocators.cpp; sourceTree = "<group>"; };
+		A45DD2DD29AF46AD00220389 /* MovingMedian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovingMedian.h; sourceTree = "<group>"; };
+		A45DD2DE29AF46AD00220389 /* FFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFT.cpp; sourceTree = "<group>"; };
+		A45DD2DF29AF46AD00220389 /* mathmisc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mathmisc.cpp; sourceTree = "<group>"; };
+		A45DD2E029AF46AD00220389 /* HistogramFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistogramFilter.h; sourceTree = "<group>"; };
+		A45DD2E129AF46AD00220389 /* VectorOpsComplex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorOpsComplex.h; sourceTree = "<group>"; };
+		A45DD2E229AF46AD00220389 /* Window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
+		A45DD2E329AF46AD00220389 /* sysutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sysutils.h; sourceTree = "<group>"; };
+		A45DD2E429AF46AD00220389 /* SampleFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleFilter.h; sourceTree = "<group>"; };
+		A45DD2E529AF46AD00220389 /* SingleThreadRingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleThreadRingBuffer.h; sourceTree = "<group>"; };
+		A45DD2E629AF46AD00220389 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
+		A45DD2E729AF46AD00220389 /* StretchCalculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StretchCalculator.cpp; sourceTree = "<group>"; };
+		A45DD2E829AF46AD00220389 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
+		A45DD2E929AF46AD00220389 /* Allocators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Allocators.h; sourceTree = "<group>"; };
+		A45DD2EA29AF46AD00220389 /* Resampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resampler.h; sourceTree = "<group>"; };
+		A45DD2EB29AF46AD00220389 /* FixedVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FixedVector.h; sourceTree = "<group>"; };
+		A45DD2EC29AF46AD00220389 /* VectorOpsComplex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VectorOpsComplex.cpp; sourceTree = "<group>"; };
+		A45DD2ED29AF46AD00220389 /* Scavenger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scavenger.h; sourceTree = "<group>"; };
+		A45DD2EE29AF46AD00220389 /* VectorOps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorOps.h; sourceTree = "<group>"; };
+		A45DD2EF29AF46AD00220389 /* BQResampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BQResampler.cpp; sourceTree = "<group>"; };
+		A45DD2F029AF46AD00220389 /* Profiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profiler.h; sourceTree = "<group>"; };
+		A45DD2F129AF46AD00220389 /* sysutils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sysutils.cpp; sourceTree = "<group>"; };
+		A45DD2F229AF46AD00220389 /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
+		A45DD2F329AF46AD00220389 /* Resampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Resampler.cpp; sourceTree = "<group>"; };
+		A45DD2F529AF46AD00220389 /* RubberBandStretcherJNI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RubberBandStretcherJNI.cpp; sourceTree = "<group>"; };
+		A45DD2F729AF46AD00220389 /* StretcherChannelData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StretcherChannelData.cpp; sourceTree = "<group>"; };
+		A45DD2F829AF46AD00220389 /* R2Stretcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R2Stretcher.h; sourceTree = "<group>"; usesTabs = 0; };
+		A45DD2F929AF46AD00220389 /* HighFrequencyAudioCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighFrequencyAudioCurve.h; sourceTree = "<group>"; };
+		A45DD2FA29AF46AD00220389 /* HighFrequencyAudioCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HighFrequencyAudioCurve.cpp; sourceTree = "<group>"; };
+		A45DD2FB29AF46AD00220389 /* SilentAudioCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SilentAudioCurve.h; sourceTree = "<group>"; };
+		A45DD2FC29AF46AE00220389 /* PercussiveAudioCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PercussiveAudioCurve.cpp; sourceTree = "<group>"; };
+		A45DD2FD29AF46AE00220389 /* StretcherProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StretcherProcess.cpp; sourceTree = "<group>"; };
+		A45DD2FE29AF46AE00220389 /* SincWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SincWindow.h; sourceTree = "<group>"; };
+		A45DD2FF29AF46AE00220389 /* R2Stretcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = R2Stretcher.cpp; sourceTree = "<group>"; };
+		A45DD30029AF46AE00220389 /* AudioCurveCalculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioCurveCalculator.cpp; sourceTree = "<group>"; };
+		A45DD30129AF46AE00220389 /* PercussiveAudioCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PercussiveAudioCurve.h; sourceTree = "<group>"; };
+		A45DD30229AF46AE00220389 /* CompoundAudioCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompoundAudioCurve.h; sourceTree = "<group>"; };
+		A45DD30329AF46AE00220389 /* SilentAudioCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SilentAudioCurve.cpp; sourceTree = "<group>"; };
+		A45DD30429AF46AE00220389 /* AudioCurveCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCurveCalculator.h; sourceTree = "<group>"; };
+		A45DD30529AF46AE00220389 /* CompoundAudioCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompoundAudioCurve.cpp; sourceTree = "<group>"; };
+		A45DD30629AF46AE00220389 /* StretcherChannelData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StretcherChannelData.h; sourceTree = "<group>"; };
+		A47BA1F81CE3265300AC1507 /* librubberband.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librubberband.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A47BA1F51CE3265300AC1507 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A45DD2A429AF468700220389 /* rubberband */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2A529AF468700220389 /* RubberBandStretcher.h */,
+				A45DD2A629AF468700220389 /* rubberband-c.h */,
+			);
+			path = rubberband;
+			sourceTree = "<group>";
+		};
+		A45DD2A729AF46AD00220389 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2A829AF46AD00220389 /* finer */,
+				A45DD2B029AF46AD00220389 /* test */,
+				A45DD2BB29AF46AD00220389 /* ext */,
+				A45DD2D229AF46AD00220389 /* RubberBandStretcher.cpp */,
+				A45DD2D329AF46AD00220389 /* rubberband-c.cpp */,
+				A45DD2D429AF46AD00220389 /* common */,
+				A45DD2F429AF46AD00220389 /* jni */,
+				A45DD2F629AF46AD00220389 /* faster */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A45DD2A829AF46AD00220389 /* finer */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2A929AF46AD00220389 /* Guide.h */,
+				A45DD2AA29AF46AD00220389 /* PhaseAdvance.h */,
+				A45DD2AB29AF46AD00220389 /* R3Stretcher.cpp */,
+				A45DD2AC29AF46AD00220389 /* BinSegmenter.h */,
+				A45DD2AD29AF46AD00220389 /* R3Stretcher.h */,
+				A45DD2AE29AF46AD00220389 /* Peak.h */,
+				A45DD2AF29AF46AD00220389 /* BinClassifier.h */,
+			);
+			path = finer;
+			sourceTree = "<group>";
+		};
+		A45DD2B029AF46AD00220389 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2B129AF46AD00220389 /* TestResampler.cpp */,
+				A45DD2B229AF46AD00220389 /* TestStretchCalculator.cpp */,
+				A45DD2B329AF46AD00220389 /* TestVectorOps.cpp */,
+				A45DD2B429AF46AD00220389 /* TestVectorOpsComplex.cpp */,
+				A45DD2B529AF46AD00220389 /* test.cpp */,
+				A45DD2B629AF46AD00220389 /* TestSignalBits.cpp */,
+				A45DD2B729AF46AD00220389 /* TestStretcher.cpp */,
+				A45DD2B829AF46AD00220389 /* TestAllocators.cpp */,
+				A45DD2B929AF46AD00220389 /* TestFFT.cpp */,
+				A45DD2BA29AF46AD00220389 /* TestBinClassifier.cpp */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+		A45DD2BB29AF46AD00220389 /* ext */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2BC29AF46AD00220389 /* float_cast */,
+				A45DD2BE29AF46AD00220389 /* getopt */,
+				A45DD2C329AF46AD00220389 /* speex */,
+				A45DD2C729AF46AD00220389 /* kissfft */,
+				A45DD2CF29AF46AD00220389 /* pommier */,
+			);
+			path = ext;
+			sourceTree = "<group>";
+		};
+		A45DD2BC29AF46AD00220389 /* float_cast */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2BD29AF46AD00220389 /* float_cast.h */,
+			);
+			path = float_cast;
+			sourceTree = "<group>";
+		};
+		A45DD2BE29AF46AD00220389 /* getopt */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2BF29AF46AD00220389 /* getopt_long.c */,
+				A45DD2C029AF46AD00220389 /* unistd.h */,
+				A45DD2C129AF46AD00220389 /* getopt.h */,
+				A45DD2C229AF46AD00220389 /* getopt.c */,
+			);
+			path = getopt;
+			sourceTree = "<group>";
+		};
+		A45DD2C329AF46AD00220389 /* speex */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2C429AF46AD00220389 /* speex_resampler.h */,
+				A45DD2C529AF46AD00220389 /* resample.c */,
+				A45DD2C629AF46AD00220389 /* COPYING */,
+			);
+			path = speex;
+			sourceTree = "<group>";
+		};
+		A45DD2C729AF46AD00220389 /* kissfft */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2C829AF46AD00220389 /* kiss_fft_log.h */,
+				A45DD2C929AF46AD00220389 /* kiss_fft.c */,
+				A45DD2CA29AF46AD00220389 /* kiss_fftr.c */,
+				A45DD2CB29AF46AD00220389 /* _kiss_fft_guts.h */,
+				A45DD2CC29AF46AD00220389 /* kiss_fft.h */,
+				A45DD2CD29AF46AD00220389 /* COPYING */,
+				A45DD2CE29AF46AD00220389 /* kiss_fftr.h */,
+			);
+			path = kissfft;
+			sourceTree = "<group>";
+		};
+		A45DD2CF29AF46AD00220389 /* pommier */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2D029AF46AD00220389 /* neon_mathfun.h */,
+				A45DD2D129AF46AD00220389 /* sse_mathfun.h */,
+			);
+			path = pommier;
+			sourceTree = "<group>";
+		};
+		A45DD2D429AF46AD00220389 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2D529AF46AD00220389 /* FFT.h */,
+				A45DD2D629AF46AD00220389 /* Thread.cpp */,
+				A45DD2D729AF46AD00220389 /* Log.cpp */,
+				A45DD2D829AF46AD00220389 /* BQResampler.h */,
+				A45DD2D929AF46AD00220389 /* mathmisc.h */,
+				A45DD2DA29AF46AD00220389 /* Profiler.cpp */,
+				A45DD2DB29AF46AD00220389 /* StretchCalculator.h */,
+				A45DD2DC29AF46AD00220389 /* Allocators.cpp */,
+				A45DD2DD29AF46AD00220389 /* MovingMedian.h */,
+				A45DD2DE29AF46AD00220389 /* FFT.cpp */,
+				A45DD2DF29AF46AD00220389 /* mathmisc.cpp */,
+				A45DD2E029AF46AD00220389 /* HistogramFilter.h */,
+				A45DD2E129AF46AD00220389 /* VectorOpsComplex.h */,
+				A45DD2E229AF46AD00220389 /* Window.h */,
+				A45DD2E329AF46AD00220389 /* sysutils.h */,
+				A45DD2E429AF46AD00220389 /* SampleFilter.h */,
+				A45DD2E529AF46AD00220389 /* SingleThreadRingBuffer.h */,
+				A45DD2E629AF46AD00220389 /* Thread.h */,
+				A45DD2E729AF46AD00220389 /* StretchCalculator.cpp */,
+				A45DD2E829AF46AD00220389 /* Log.h */,
+				A45DD2E929AF46AD00220389 /* Allocators.h */,
+				A45DD2EA29AF46AD00220389 /* Resampler.h */,
+				A45DD2EB29AF46AD00220389 /* FixedVector.h */,
+				A45DD2EC29AF46AD00220389 /* VectorOpsComplex.cpp */,
+				A45DD2ED29AF46AD00220389 /* Scavenger.h */,
+				A45DD2EE29AF46AD00220389 /* VectorOps.h */,
+				A45DD2EF29AF46AD00220389 /* BQResampler.cpp */,
+				A45DD2F029AF46AD00220389 /* Profiler.h */,
+				A45DD2F129AF46AD00220389 /* sysutils.cpp */,
+				A45DD2F229AF46AD00220389 /* RingBuffer.h */,
+				A45DD2F329AF46AD00220389 /* Resampler.cpp */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		A45DD2F429AF46AD00220389 /* jni */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2F529AF46AD00220389 /* RubberBandStretcherJNI.cpp */,
+			);
+			path = jni;
+			sourceTree = "<group>";
+		};
+		A45DD2F629AF46AD00220389 /* faster */ = {
+			isa = PBXGroup;
+			children = (
+				A45DD2F729AF46AD00220389 /* StretcherChannelData.cpp */,
+				A45DD2F829AF46AD00220389 /* R2Stretcher.h */,
+				A45DD2F929AF46AD00220389 /* HighFrequencyAudioCurve.h */,
+				A45DD2FA29AF46AD00220389 /* HighFrequencyAudioCurve.cpp */,
+				A45DD2FB29AF46AD00220389 /* SilentAudioCurve.h */,
+				A45DD2FC29AF46AE00220389 /* PercussiveAudioCurve.cpp */,
+				A45DD2FD29AF46AE00220389 /* StretcherProcess.cpp */,
+				A45DD2FE29AF46AE00220389 /* SincWindow.h */,
+				A45DD2FF29AF46AE00220389 /* R2Stretcher.cpp */,
+				A45DD30029AF46AE00220389 /* AudioCurveCalculator.cpp */,
+				A45DD30129AF46AE00220389 /* PercussiveAudioCurve.h */,
+				A45DD30229AF46AE00220389 /* CompoundAudioCurve.h */,
+				A45DD30329AF46AE00220389 /* SilentAudioCurve.cpp */,
+				A45DD30429AF46AE00220389 /* AudioCurveCalculator.h */,
+				A45DD30529AF46AE00220389 /* CompoundAudioCurve.cpp */,
+				A45DD30629AF46AE00220389 /* StretcherChannelData.h */,
+			);
+			path = faster;
+			sourceTree = "<group>";
+		};
+		A47BA1EF1CE3265300AC1507 = {
+			isa = PBXGroup;
+			children = (
+				A45DD2A429AF468700220389 /* rubberband */,
+				A45DD2A729AF46AD00220389 /* src */,
+				A47BA1F91CE3265300AC1507 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A47BA1F91CE3265300AC1507 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A47BA1F81CE3265300AC1507 /* librubberband.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A47BA1F71CE3265300AC1507 /* rubberband */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A47BA2011CE3265300AC1507 /* Build configuration list for PBXNativeTarget "rubberband" */;
+			buildPhases = (
+				A47BA1F41CE3265300AC1507 /* Sources */,
+				A47BA1F51CE3265300AC1507 /* Frameworks */,
+				A47BA1F61CE3265300AC1507 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rubberband;
+			productName = rubberband;
+			productReference = A47BA1F81CE3265300AC1507 /* librubberband.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A47BA1F01CE3265300AC1507 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1420;
+				ORGANIZATIONNAME = Harmonicdog;
+				TargetAttributes = {
+					A47BA1F71CE3265300AC1507 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = A47BA1F31CE3265300AC1507 /* Build configuration list for PBXProject "rubberband" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+			);
+			mainGroup = A47BA1EF1CE3265300AC1507;
+			productRefGroup = A47BA1F91CE3265300AC1507 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A47BA1F71CE3265300AC1507 /* rubberband */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A47BA1F41CE3265300AC1507 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A45DD32929AF46AE00220389 /* R2Stretcher.cpp in Sources */,
+				A45DD32129AF46AE00220389 /* BQResampler.cpp in Sources */,
+				A45DD31429AF46AE00220389 /* resample.c in Sources */,
+				A45DD32F29AF51BC00220389 /* VectorOpsComplex.cpp in Sources */,
+				A45DD32D29AF489D00220389 /* R3Stretcher.cpp in Sources */,
+				A45DD32229AF46AE00220389 /* sysutils.cpp in Sources */,
+				A45DD31529AF46AE00220389 /* kiss_fft.c in Sources */,
+				A45DD31A29AF46AE00220389 /* Log.cpp in Sources */,
+				A45DD32529AF46AE00220389 /* StretcherChannelData.cpp in Sources */,
+				A45DD31829AF46AE00220389 /* rubberband-c.cpp in Sources */,
+				A45DD31629AF46AE00220389 /* kiss_fftr.c in Sources */,
+				A45DD32829AF46AE00220389 /* StretcherProcess.cpp in Sources */,
+				A45DD32B29AF46AE00220389 /* SilentAudioCurve.cpp in Sources */,
+				A45DD32729AF46AE00220389 /* PercussiveAudioCurve.cpp in Sources */,
+				A45DD31B29AF46AE00220389 /* Profiler.cpp in Sources */,
+				A45DD31929AF46AE00220389 /* Thread.cpp in Sources */,
+				A45DD32629AF46AE00220389 /* HighFrequencyAudioCurve.cpp in Sources */,
+				A45DD32329AF46AE00220389 /* Resampler.cpp in Sources */,
+				A45DD31D29AF46AE00220389 /* FFT.cpp in Sources */,
+				A45DD31729AF46AE00220389 /* RubberBandStretcher.cpp in Sources */,
+				A45DD31E29AF46AE00220389 /* mathmisc.cpp in Sources */,
+				A45DD32C29AF46AE00220389 /* CompoundAudioCurve.cpp in Sources */,
+				A45DD31C29AF46AE00220389 /* Allocators.cpp in Sources */,
+				A45DD31F29AF46AE00220389 /* StretchCalculator.cpp in Sources */,
+				A45DD32A29AF46AE00220389 /* AudioCurveCalculator.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A47BA1FF1CE3265300AC1507 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					.,
+					src,
+					rubberband,
+					src/ext,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DMALLOC_IS_ALIGNED",
+					"-DHAVE_VDSP",
+					"-DUSE_SPEEX",
+					"-DUSE_POMMIER_MATHFUN",
+					"-DNO_THREADING",
+					"-DNO_THREAD_CHECKS",
+					"-DNO_TIMING",
+					"-DUSE_BQRESAMPLER",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A47BA2001CE3265300AC1507 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					.,
+					src,
+					rubberband,
+					src/ext,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DMALLOC_IS_ALIGNED",
+					"-DHAVE_VDSP",
+					"-DUSE_SPEEX",
+					"-DUSE_POMMIER_MATHFUN",
+					"-DNO_THREADING",
+					"-DNO_THREAD_CHECKS",
+					"-DNO_TIMING",
+					"-DUSE_BQRESAMPLER",
+					"-ffast-math",
+					"-ftree-vectorize",
+				);
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A47BA2021CE3265300AC1507 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A47BA2031CE3265300AC1507 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A47BA1F31CE3265300AC1507 /* Build configuration list for PBXProject "rubberband" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A47BA1FF1CE3265300AC1507 /* Debug */,
+				A47BA2001CE3265300AC1507 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A47BA2011CE3265300AC1507 /* Build configuration list for PBXNativeTarget "rubberband" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A47BA2021CE3265300AC1507 /* Debug */,
+				A47BA2031CE3265300AC1507 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A47BA1F01CE3265300AC1507 /* Project object */;
+}
