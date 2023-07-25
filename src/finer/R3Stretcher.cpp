@@ -657,6 +657,12 @@ R3Stretcher::setMaxProcessSize(size_t requested)
     ensureOutbuf(n * 8, false);
 }
 
+size_t
+R3Stretcher::getProcessSizeLimit() const
+{
+    return m_limits.overallMaxProcessSize;
+}
+
 void
 R3Stretcher::ensureInbuf(int required, bool warn)
 {

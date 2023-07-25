@@ -94,6 +94,7 @@ public:
 
     void setExpectedInputDuration(size_t samples);
     void setMaxProcessSize(size_t samples);
+    size_t getProcessSizeLimit() const;
     
     void setDebugLevel(int level) {
         m_log.setDebugLevel(level);
