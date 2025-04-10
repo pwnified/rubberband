@@ -3,7 +3,7 @@
 /*
     Rubber Band Library
     An audio time-stretching and pitch-shifting library.
-    Copyright 2007-2023 Particular Programs Ltd.
+    Copyright 2007-2024 Particular Programs Ltd.
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -46,10 +46,10 @@ BOOST_AUTO_TEST_CASE(engine_version)
 {
     RubberBandStretcher s2(44100, 1, RubberBandStretcher::OptionEngineFaster);
     BOOST_TEST(s2.getEngineVersion() == 2);
-    BOOST_TEST(s2.getProcessSizeLimit() == 524288);
+    BOOST_TEST(s2.getProcessSizeLimit() == 524288u);
     RubberBandStretcher s3(44100, 1, RubberBandStretcher::OptionEngineFiner);
     BOOST_TEST(s3.getEngineVersion() == 3);
-    BOOST_TEST(s3.getProcessSizeLimit() == 524288);
+    BOOST_TEST(s3.getProcessSizeLimit() == 524288u);
 }
 
 BOOST_AUTO_TEST_CASE(sinusoid_unchanged_offline_faster)
@@ -76,10 +76,10 @@ BOOST_AUTO_TEST_CASE(sinusoid_unchanged_offline_faster)
     stretcher.process(&inp, n, true);
     BOOST_TEST(stretcher.available() == n);
 
-    BOOST_TEST(stretcher.getStartDelay() == 0); // offline mode
+    BOOST_TEST(stretcher.getStartDelay() == 0u); // offline mode
     
     size_t got = stretcher.retrieve(&outp, n);
-    BOOST_TEST(got == n);
+    BOOST_TEST(got == size_t(n));
     BOOST_TEST(stretcher.available() == -1);
 
     // We now have n samples of a simple sinusoid with stretch factor
@@ -133,10 +133,10 @@ BOOST_AUTO_TEST_CASE(sinusoid_unchanged_offline_finer)
     stretcher.process(&inp, n, true);
     BOOST_TEST(stretcher.available() == n);
 
-    BOOST_TEST(stretcher.getStartDelay() == 0); // offline mode
+    BOOST_TEST(stretcher.getStartDelay() == 0u); // offline mode
     
     size_t got = stretcher.retrieve(&outp, n);
-    BOOST_TEST(got == n);
+    BOOST_TEST(got == size_t(n));
     BOOST_TEST(stretcher.available() == -1);
 
     // The R3 engine is actually less precise than R2 here because of
@@ -186,10 +186,10 @@ BOOST_AUTO_TEST_CASE(sinusoid_2x_offline_finer)
     stretcher.process(&inp, n, true);
     BOOST_TEST(stretcher.available() == n*2);
 
-    BOOST_TEST(stretcher.getStartDelay() == 0); // offline mode
+    BOOST_TEST(stretcher.getStartDelay() == 0u); // offline mode
     
     size_t got = stretcher.retrieve(&outp, n*2);
-    BOOST_TEST(got == n*2);
+    BOOST_TEST(got == size_t(n)*2);
     BOOST_TEST(stretcher.available() == -1);
 
     int period = -1;
@@ -774,10 +774,10 @@ BOOST_AUTO_TEST_CASE(impulses_2x_offline_faster)
     stretcher.process(&inp, n, true);
     BOOST_TEST(stretcher.available() == n * 2);
 
-    BOOST_TEST(stretcher.getStartDelay() == 0); // offline mode
+    BOOST_TEST(stretcher.getStartDelay() == 0u); // offline mode
     
     size_t got = stretcher.retrieve(&outp, n * 2);
-    BOOST_TEST(got == n * 2);
+    BOOST_TEST(got == size_t(n) * 2);
     BOOST_TEST(stretcher.available() == -1);
 
     int peak0 = -1, peak1 = -1, peak2 = -1;
@@ -843,10 +843,10 @@ BOOST_AUTO_TEST_CASE(impulses_2x_offline_finer)
     stretcher.process(&inp, n, true);
     BOOST_TEST(stretcher.available() == n * 2);
 
-    BOOST_TEST(stretcher.getStartDelay() == 0); // offline mode
+    BOOST_TEST(stretcher.getStartDelay() == 0u); // offline mode
     
     size_t got = stretcher.retrieve(&outp, n * 2);
-    BOOST_TEST(got == n * 2);
+    BOOST_TEST(got == size_t(n) * 2);
     BOOST_TEST(stretcher.available() == -1);
 
     int peak0 = -1, peak1 = -1, peak2 = -1;
@@ -913,10 +913,10 @@ BOOST_AUTO_TEST_CASE(impulses_2x_5up_offline_finer)
     stretcher.process(&inp, n, true);
     BOOST_TEST(stretcher.available() == n * 2);
 
-    BOOST_TEST(stretcher.getStartDelay() == 0); // offline mode
+    BOOST_TEST(stretcher.getStartDelay() == 0u); // offline mode
     
     size_t got = stretcher.retrieve(&outp, n * 2);
-    BOOST_TEST(got == n * 2);
+    BOOST_TEST(got == size_t(n) * 2);
     BOOST_TEST(stretcher.available() == -1);
 
     int peak0 = -1, peak1 = -1, peak2 = -1;
@@ -1424,7 +1424,7 @@ static void with_resets(RubberBandStretcher::Options options,
             stretcher->process(&inp, n, true);
             BOOST_TEST(stretcher->available() == nOut);
 
-            BOOST_TEST(stretcher->getStartDelay() == 0); // offline mode
+            BOOST_TEST(stretcher->getStartDelay() == 0u); // offline mode
     
             nActual = (int)stretcher->retrieve(&outp, nOut);
             BOOST_TEST(nActual == nOut);
@@ -1514,6 +1514,34 @@ BOOST_AUTO_TEST_CASE(with_resets_2x_0up_realtime_faster)
 BOOST_AUTO_TEST_CASE(with_resets_2x_5up_realtime_faster)
 {
     with_resets(RubberBandStretcher::OptionProcessRealTime | RubberBandStretcher::OptionEngineFaster, 2.0, 1.5);
+}
+
+BOOST_AUTO_TEST_CASE(long_blocksize_with_smoothing)
+{
+    // Test added because the smoothing option was calling alloca in a
+    // loop, which could run us out of stack. This test is best used
+    // with a small stack artificially enforced via e.g. ulimit -s 32
+    
+    int n = 10000;
+    float freq = 440.f;
+    int rate = 44100;
+    RubberBandStretcher stretcher
+        (rate, 1,
+         RubberBandStretcher::OptionEngineFaster |
+         RubberBandStretcher::OptionProcessOffline |
+         RubberBandStretcher::OptionSmoothingOn);
+    
+    vector<float> in(n);
+    for (int i = 0; i < n; ++i) {
+        in[i] = sinf(float(i) * freq * M_PI * 2.f / float(rate));
+    }
+    float *inp = in.data();
+
+    stretcher.setMaxProcessSize(n);
+    stretcher.setExpectedInputDuration(n);
+
+    stretcher.study(&inp, n, true);
+    stretcher.process(&inp, n, true);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

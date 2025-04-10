@@ -5,21 +5,20 @@ An audio time-stretching and pitch-shifting library and utility program.
 
 Written by Chris Cannam, chris.cannam@breakfastquay.com.
 Published by Particular Programs Ltd t/a Breakfast Quay.
-Copyright 2007-2023 Particular Programs Ltd.
+Copyright 2007-2024 Particular Programs Ltd.
 
 Rubber Band is a library and utility program that permits changing the
 tempo and pitch of an audio recording independently of one another.
 
 * About Rubber Band: https://breakfastquay.com/rubberband/
 * Code repository: https://hg.sr.ht/~breakfastquay/rubberband
-* Issue tracker: https://todo.sr.ht/~breakfastquay/rubberband or https://github.com/breakfastquay/rubberband/issues
 * Github mirror: https://github.com/breakfastquay/rubberband
 
 CI builds:
 
 * [![Build status](https://builds.sr.ht/~breakfastquay/rubberband.svg)](https://builds.sr.ht/~breakfastquay/rubberband?) (Linux)
 * [![Build Status](https://github.com/breakfastquay/rubberband/workflows/macOS%20and%20iOS%20CI/badge.svg)](https://github.com/breakfastquay/rubberband/actions?query=workflow%3A%22macOS+and+iOS+CI%22) (macOS, iOS)
-* [![Build Status](https://ci.appveyor.com/api/projects/status/hhhhpf718jwhpyf6?svg=true)](https://ci.appveyor.com/project/breakfastquay/rubberband) (Windows)
+* [![Build Status](https://github.com/breakfastquay/rubberband/workflows/Windows%20CI/badge.svg)](https://github.com/breakfastquay/rubberband/actions?query=workflow%3A%22Windows+CI%22) (Windows)
 
 
 ## Licence
@@ -56,8 +55,8 @@ licences for some relevant library code are as follows, to the best of
 our knowledge. See also the file [COMPILING.md](COMPILING.md) for more
 details.
 
- * FFTW3 - GPL; proprietary licence needed for redistribution
- * Intel IPP - Proprietary; licence needed for redistribution
+ * FFTW3 - GPL with commercial proprietary option
+ * Intel IPP - Proprietary of some nature
  * SLEEF - BSD-like
  * KissFFT - BSD-like
  * libsamplerate - BSD-like from version 0.1.9 onwards
@@ -147,25 +146,29 @@ numerical argument from 0 to 6).
 
 ## 3. Using Rubber Band Library
 
-Rubber Band has a public API that consists of one C++ class, called
-`RubberBandStretcher` in the `RubberBand` namespace.  You should
-`#include <rubberband/RubberBandStretcher.h>` to use this class.
-There is extensive documentation in the class header.
+Rubber Band has a public API that consists of two C++ classes living
+in the `RubberBand` namespace, called `RubberBandStretcher` and
+`RubberBandLiveShifter`. The former is the main Rubber Band class for
+general time and pitch manipulation, the latter a simpler API for
+block-by-block pitch-shifting.  You should `#include
+<rubberband/RubberBandStretcher.h>` or
+`<rubberband/RubberBandLiveShifter.h>` to use these classes.  There is
+extensive documentation in the headers.
 
 A header with C language bindings is also provided in
 `<rubberband/rubberband-c.h>`.  This is a wrapper around the C++
 implementation, and as the implementation is the same, it also
 requires linkage against the C++ standard libraries.  It is not yet
-documented separately from the C++ header.  You should include only
-one of the two headers, not both.
+documented separately from the C++ headers.  You should include either
+C++ or C headers, not both.
 
 A .NET interface is also included, contributed by Jonathan Gilbert;
 see the files in the `dotnet` directory for details.
 
 The source code for the command-line utility (`main/main.cpp`)
-provides a good example of how to use Rubber Band in offline mode; the
-pitch shifter plugin (`ladspa-lv2/RubberBandPitchShifter.cpp`) may be
-used as an example of Rubber Band in real-time mode.
+provides an example of how to use Rubber Band in offline mode; the
+pitch shifter plugins (in `ladspa-lv2`) may be used examples of Rubber
+Band in real-time mode.
 
 **IMPORTANT:** Please ensure you have read and understood the
 licensing terms for Rubber Band before using it in your application.

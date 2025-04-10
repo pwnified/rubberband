@@ -3,7 +3,7 @@
 /*
     Rubber Band Library
     An audio time-stretching and pitch-shifting library.
-    Copyright 2007-2023 Particular Programs Ltd.
+    Copyright 2007-2024 Particular Programs Ltd.
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -25,6 +25,7 @@
 #undef RB_PLUGIN_LV2
 #include "RubberBandPitchShifter.cpp"
 #include "RubberBandR3PitchShifter.cpp"
+#include "RubberBandLivePitchShifter.cpp"
 
 #include <stdio.h>
 
@@ -34,8 +35,10 @@ const LADSPA_Descriptor *ladspa_descriptor(unsigned long index)
 {
     if (index < 2) {
         return RubberBandPitchShifter::getDescriptor(index);
-    } else {
+    } else if (index < 4) {
         return RubberBandR3PitchShifter::getDescriptor(index - 2);
+    } else {
+        return RubberBandLivePitchShifter::getDescriptor(index - 4);
     }
 }
 

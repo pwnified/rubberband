@@ -4,7 +4,7 @@
 /*
     Rubber Band Library
     An audio time-stretching and pitch-shifting library.
-    Copyright 2007-2022 Particular Programs Ltd.
+    Copyright 2007-2024 Particular Programs Ltd.
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -28,14 +28,18 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define RUBBERBAND_VERSION "3.3.0"
-#define RUBBERBAND_API_MAJOR_VERSION 2
-#define RUBBERBAND_API_MINOR_VERSION 8
+    
+#define RUBBERBAND_VERSION "4.0.0"
+#define RUBBERBAND_API_MAJOR_VERSION 3
+#define RUBBERBAND_API_MINOR_VERSION 0
 
 #undef RB_EXTERN
 #ifdef _MSC_VER
+#ifndef RUBBERBAND_STATIC
 #define RB_EXTERN extern __declspec(dllexport)
+#else
+#define RB_EXTERN extern
+#endif
 #else
 #define RB_EXTERN extern
 #endif
@@ -44,11 +48,13 @@ extern "C" {
  * This is a C-linkage interface to the Rubber Band time stretcher.
  * 
  * This is a wrapper interface: the primary interface is in C++ and is
- * defined and documented in RubberBandStretcher.h.  The library
- * itself is implemented in C++, and requires C++ standard library
- * support even when using the C-linkage API.
+ * defined and documented in RubberBandStretcher.h and
+ * RubberBandLiveShifter.h.  The library itself is implemented in C++,
+ * and requires C++ standard library support even when using the
+ * C-linkage API.
  *
- * Please see RubberBandStretcher.h for documentation.
+ * Please see RubberBandStretcher.h and RubberBandLiveShifter.h for
+ * documentation.
  *
  * If you are writing to the C++ API, do not include this header.
  */
@@ -103,10 +109,10 @@ struct RubberBandState_;
 typedef struct RubberBandState_ *RubberBandState;
 
 RB_EXTERN RubberBandState rubberband_new(unsigned int sampleRate,
-                                      unsigned int channels,
-                                      RubberBandOptions options,
-                                      double initialTimeRatio,
-                                      double initialPitchScale);
+                                         unsigned int channels,
+                                         RubberBandOptions options,
+                                         double initialTimeRatio,
+                                         double initialPitchScale);
 
 RB_EXTERN void rubberband_delete(RubberBandState);
 
@@ -155,6 +161,52 @@ RB_EXTERN void rubberband_calculate_stretch(RubberBandState);
 RB_EXTERN void rubberband_set_debug_level(RubberBandState, int level);
 RB_EXTERN void rubberband_set_default_debug_level(int level);
 
+
+enum RubberBandLiveOption {
+
+    RubberBandLiveOptionWindowShort      = 0x00000000,
+    RubberBandLiveOptionWindowMedium     = 0x00100000,
+
+    RubberBandLiveOptionFormantShifted   = 0x00000000,
+    RubberBandLiveOptionFormantPreserved = 0x01000000,
+
+    RubberBandLiveOptionChannelsApart    = 0x00000000,
+    RubberBandLiveOptionChannelsTogether = 0x10000000
+};
+
+typedef int RubberBandLiveOptions;
+
+struct RubberBandLiveState_;
+typedef struct RubberBandLiveState_ *RubberBandLiveState;
+
+RB_EXTERN RubberBandLiveState rubberband_live_new(unsigned int sampleRate,
+                                                  unsigned int channels,
+                                                  RubberBandOptions options);
+
+RB_EXTERN void rubberband_live_delete(RubberBandLiveState);
+
+RB_EXTERN void rubberband_live_reset(RubberBandLiveState);
+
+RB_EXTERN void rubberband_live_set_pitch_scale(RubberBandLiveState, double scale);
+RB_EXTERN double rubberband_live_get_pitch_scale(const RubberBandLiveState);
+
+RB_EXTERN void rubberband_live_set_formant_scale(RubberBandLiveState, double scale);
+RB_EXTERN double rubberband_live_get_formant_scale(const RubberBandLiveState);
+
+RB_EXTERN unsigned int rubberband_live_get_start_delay(const RubberBandLiveState);
+
+RB_EXTERN void rubberband_live_set_formant_option(RubberBandLiveState, RubberBandOptions options);
+
+RB_EXTERN unsigned int rubberband_live_get_block_size(RubberBandLiveState);
+
+RB_EXTERN void rubberband_live_shift(RubberBandLiveState, const float *const *input, float *const *output);
+
+RB_EXTERN unsigned int rubberband_live_get_channel_count(const RubberBandLiveState);
+
+RB_EXTERN void rubberband_live_set_debug_level(RubberBandLiveState, int level);
+RB_EXTERN void rubberband_live_set_default_debug_level(int level);
+
+    
 #ifdef __cplusplus
 }
 #endif

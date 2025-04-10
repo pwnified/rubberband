@@ -3,7 +3,7 @@
 /*
     Rubber Band Library
     An audio time-stretching and pitch-shifting library.
-    Copyright 2007-2023 Particular Programs Ltd.
+    Copyright 2007-2024 Particular Programs Ltd.
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -299,6 +299,10 @@ R3Stretcher::createResampler()
         resamplerParameters.dynamism = Resampler::RatioMostlyFixed;
         resamplerParameters.ratioChange = Resampler::SuddenRatioChange;
     }
+
+    int debug = m_log.getDebugLevel();
+    if (debug > 0) --debug;
+    resamplerParameters.debugLevel = debug;
     
     m_resampler = std::unique_ptr<Resampler>
         (new Resampler(resamplerParameters, m_parameters.channels));

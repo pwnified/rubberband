@@ -2,7 +2,7 @@
 project(
   'Rubber Band Library',
   'c', 'cpp',
-  version: '3.3.0',
+  version: '4.0.0',
   license: 'GPL-2.0-or-later',
   default_options: [
     'cpp_std=c++11',
@@ -15,7 +15,7 @@ project(
   meson_version: '>= 0.53.0'
 )
 
-rubberband_dynamic_library_version = '2.3.0'
+rubberband_dynamic_library_version = '3.0.0'
 
 system = host_machine.system()
 architecture = host_machine.cpu_family()
@@ -29,11 +29,13 @@ pkg = import('pkgconfig')
 public_headers = [
   'rubberband/rubberband-c.h',
   'rubberband/RubberBandStretcher.h',
+  'rubberband/RubberBandLiveShifter.h',
 ]
 
 library_sources = [
   'src/rubberband-c.cpp',
   'src/RubberBandStretcher.cpp',
+  'src/RubberBandLiveShifter.cpp',
   'src/faster/AudioCurveCalculator.cpp',
   'src/faster/CompoundAudioCurve.cpp',
   'src/faster/HighFrequencyAudioCurve.cpp',
@@ -52,6 +54,7 @@ library_sources = [
   'src/common/mathmisc.cpp',
   'src/common/Thread.cpp',
   'src/finer/R3Stretcher.cpp', 
+  'src/finer/R3LiveShifter.cpp', 
 ]
 
 jni_sources = [
@@ -60,6 +63,11 @@ jni_sources = [
 
 java_sources = [
   'com/breakfastquay/rubberband/RubberBandStretcher.java',
+  'com/breakfastquay/rubberband/RubberBandLiveShifter.java',
+]
+
+java_test_sources = [
+  'com/breakfastquay/rubberband/test/RubberBandTest.java',
 ]
 
 program_sources = [
@@ -89,6 +97,7 @@ lv2_sources = [
 unit_test_sources = [
   'src/test/TestAllocators.cpp',
   'src/test/TestFFT.cpp',
+  'src/test/TestLiveShifter.cpp',
   'src/test/TestResampler.cpp',
   'src/test/TestVectorOpsComplex.cpp',
   'src/test/TestVectorOps.cpp',
@@ -363,7 +372,8 @@ if ipp_needed
   feature_defines += [
     '-DHAVE_IPP',
     '-DUSE_IPP_STATIC',
-    '-I' + ipp_path / 'include'
+    '-I' + ipp_path / 'include',
+    '-I' + ipp_path / 'include/ipp',
   ]
   if architecture == 'x86'
     feature_libraries += [
@@ -432,11 +442,11 @@ ladspa_symbol_args = []
 lv2_symbol_args = []
 vamp_symbol_args = []
 
-if get_option('buildtype').startswith('release')
-  config_summary += { 'Build type': 'Release' }
-  feature_defines += ['-DNO_THREAD_CHECKS', '-DNO_TIMING', '-DNDEBUG']
+if get_option('debug')
+  config_summary += { 'Debug': 'Enabled' }
 else
-  config_summary += { 'Build type': 'Debug' }
+  config_summary += { 'Debug': 'Disabled' }
+  feature_defines += ['-DNO_THREAD_CHECKS', '-DNO_TIMING', '-DNDEBUG']
 endif
 
 if system == 'darwin'
@@ -651,7 +661,8 @@ if have_jni
     # NB the JNI library is not versioned
     install: true,
   )
-  jar('rubberband', 'com/breakfastquay/rubberband/RubberBandStretcher.java')
+  jar('rubberband', java_sources)
+  jar('rubberband-test', java_test_sources)
 else
   target_summary += { 'JNI library': false }
   if not have_java

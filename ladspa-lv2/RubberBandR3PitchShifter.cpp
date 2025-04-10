@@ -3,7 +3,7 @@
 /*
     Rubber Band Library
     An audio time-stretching and pitch-shifting library.
-    Copyright 2007-2023 Particular Programs Ltd.
+    Copyright 2007-2024 Particular Programs Ltd.
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -30,10 +30,9 @@
 
 using namespace RubberBand;
 
-using std::cout;
 using std::cerr;
 using std::endl;
-using std::min;
+using std::string;
 
 #ifdef RB_PLUGIN_LADSPA
 
@@ -221,7 +220,7 @@ RubberBandR3PitchShifter::getDescriptor(unsigned long index)
 const LV2_Descriptor
 RubberBandR3PitchShifter::lv2DescriptorMono =
 {
-    "http://breakfastquay.com/rdf/lv2-rubberband-r3#mono",
+    "http://breakfastquay.com/rdf/lv2-rubberband#r3mono",
     instantiate,
     connectPort,
     activate,
@@ -234,7 +233,7 @@ RubberBandR3PitchShifter::lv2DescriptorMono =
 const LV2_Descriptor
 RubberBandR3PitchShifter::lv2DescriptorStereo =
 {
-    "http://breakfastquay.com/rdf/lv2-rubberband-r3#stereo",
+    "http://breakfastquay.com/rdf/lv2-rubberband#r3stereo",
     instantiate,
     connectPort,
     activate,
@@ -341,18 +340,18 @@ RubberBandR3PitchShifter::instantiate(const LV2_Descriptor *desc, double rate,
                                     const char *, const LV2_Feature *const *)
 {
     if (rate < 1.0) {
-        std::cerr << "RubberBandR3PitchShifter::instantiate: invalid sample rate "
-                  << rate << " provided" << std::endl;
+        cerr << "RubberBandR3PitchShifter::instantiate: invalid sample rate "
+             << rate << " provided" << endl;
         return nullptr;
     }
     size_t srate = size_t(round(rate));
-    if (std::string(desc->URI) == lv2DescriptorMono.URI) {
+    if (string(desc->URI) == lv2DescriptorMono.URI) {
         return new RubberBandR3PitchShifter(srate, 1);
-    } else if (std::string(desc->URI) == lv2DescriptorStereo.URI) {
+    } else if (string(desc->URI) == lv2DescriptorStereo.URI) {
         return new RubberBandR3PitchShifter(srate, 2);
     } else {
-        std::cerr << "RubberBandR3PitchShifter::instantiate: unrecognised URI "
-                  << desc->URI << " requested" << std::endl;
+        cerr << "RubberBandR3PitchShifter::instantiate: unrecognised URI "
+             << desc->URI << " requested" << endl;
         return nullptr;
     }
 }
@@ -593,7 +592,6 @@ RubberBandR3PitchShifter::runImpl(uint32_t insamples, uint32_t offset)
 
     const int samples = insamples;
     int processed = 0;
-    size_t outTotal = 0;
 
     while (processed < samples) {
 
@@ -622,7 +620,6 @@ RubberBandR3PitchShifter::runImpl(uint32_t insamples, uint32_t offset)
         }
         
         size_t actual = m_stretcher->retrieve(m_scratch, outchunk);
-        outTotal += actual;
 
         for (size_t c = 0; c < m_channels; ++c) {
             m_outputBuffer[c]->write(m_scratch[c], actual);

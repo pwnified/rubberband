@@ -3,7 +3,7 @@
 /*
     Rubber Band Library
     An audio time-stretching and pitch-shifting library.
-    Copyright 2007-2022 Particular Programs Ltd.
+    Copyright 2007-2024 Particular Programs Ltd.
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License as
@@ -24,13 +24,17 @@
 #ifndef RUBBERBAND_STRETCHER_H
 #define RUBBERBAND_STRETCHER_H
     
-#define RUBBERBAND_VERSION "3.3.0"
-#define RUBBERBAND_API_MAJOR_VERSION 2
-#define RUBBERBAND_API_MINOR_VERSION 8
+#define RUBBERBAND_VERSION "4.0.0"
+#define RUBBERBAND_API_MAJOR_VERSION 3
+#define RUBBERBAND_API_MINOR_VERSION 0
 
 #undef RUBBERBAND_DLLEXPORT
 #ifdef _MSC_VER
+#ifndef RUBBERBAND_STATIC
 #define RUBBERBAND_DLLEXPORT __declspec(dllexport)
+#else
+#define RUBBERBAND_DLLEXPORT
+#endif
 #else
 #define RUBBERBAND_DLLEXPORT
 #endif
@@ -49,13 +53,16 @@ namespace RubberBand
  *
  * ### Summary
  * 
- * The Rubber Band Library API is contained in the single class
- * RubberBand::RubberBandStretcher.
+ * The primary Rubber Band Library API is contained in the class
+ * RubberBand::RubberBandStretcher. This class can perform both pitch
+ * shifting and time stretching and supports every feature of the
+ * library. A simpler, more limited API that supports only
+ * pitch-shifting can be found in RubberBand::RubberBandLiveShifter.
  *
- * The Rubber Band stretcher supports two processing modes, offline
- * and real-time, and two processing "engines", known as the R2 or
- * Faster engine and the R3 or Finer engine. The choices of processing
- * mode and engine are fixed on construction: see
+ * RubberBandStretcher supports two processing modes, offline and
+ * real-time, and two processing "engines", known as the R2 or Faster
+ * engine and the R3 or Finer engine. The choices of processing mode
+ * and engine are fixed on construction: see the constructor
  * RubberBandStretcher::RubberBandStretcher. The two engines work
  * identically in API terms, and both of them support both offline and
  * real-time modes as described below.
