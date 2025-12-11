@@ -256,6 +256,13 @@ public:
         else return m_r3->getInputFramesBuffered();
     }
 
+    RTENTRY__
+    size_t
+    getInputFramesForOutputBuffer() const
+    {
+        if (m_r2) return 0;  // R2 doesn't support this yet
+        else return m_r3->getInputFramesForOutputBuffer();
+    }
 
     void
     study(const float *const *input, size_t samples,
@@ -533,7 +540,14 @@ RubberBandStretcher::getInputFramesBuffered() const
 {
     return m_d->getInputFramesBuffered();
 }
-	
+
+RTENTRY__
+size_t
+RubberBandStretcher::getInputFramesForOutputBuffer() const
+{
+    return m_d->getInputFramesForOutputBuffer();
+}
+
 void
 RubberBandStretcher::study(const float *const *input, size_t samples,
                            bool final)

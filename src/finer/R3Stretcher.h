@@ -83,6 +83,7 @@ public:
     void study(const float *const *input, size_t samples, bool final);
     size_t getSamplesRequired() const;
     size_t getInputFramesBuffered() const;
+    size_t getInputFramesForOutputBuffer() const;  // Input frames corresponding to current output buffer
     void process(const float *const *input, size_t samples, bool final);
     int available() const;
     size_t retrieve(float *const *output, size_t samples) const;
@@ -352,7 +353,21 @@ protected:
     size_t m_lastKeyFrameSurpassed;
     size_t m_totalOutputDuration;
     std::map<size_t, size_t> m_keyFrameMap;
-    
+
+    // Frame-level input/output ratio tracking for accurate sync
+    // Each entry records (inputConsumed, outputProduced) for one internal processing frame
+    struct FrameRatio {
+        int inputConsumed;
+        int outputProduced;
+    };
+    static constexpr size_t kMaxFrameHistory = 2048;  // Enough for max output buffering
+    std::vector<FrameRatio> m_frameHistory;
+    size_t m_frameHistoryHead = 0;   // Next write position (circular)
+    size_t m_frameHistoryCount = 0;  // Number of valid entries
+
+    void recordFrameRatio(int inputConsumed, int outputProduced);
+    size_t getInputFramesForOutputBufferInternal() const;
+
     enum class ProcessMode {
         JustCreated,
         Studying,

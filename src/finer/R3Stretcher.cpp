@@ -152,6 +152,11 @@ R3Stretcher::initialise()
         // create the resampler if needed then
     }
 
+    // Initialize frame history for input/output tracking
+    m_frameHistory.resize(kMaxFrameHistory);
+    m_frameHistoryHead = 0;
+    m_frameHistoryCount = 0;
+
     calculateHop();
 
     if (!m_inhop.is_lock_free()) {
@@ -564,6 +569,10 @@ R3Stretcher::reset()
     m_totalOutputDuration = 0;
     m_keyFrameMap.clear();
 
+    // Clear frame history for input/output tracking
+    m_frameHistoryHead = 0;
+    m_frameHistoryCount = 0;
+
     m_mode = ProcessMode::JustCreated;
 
     m_calculator->reset();
@@ -643,6 +652,64 @@ R3Stretcher::getSamplesRequired() const
 size_t
 R3Stretcher::getInputFramesBuffered() const {
     return m_parameters.channels > 0 ? m_channelData[0]->inbuf->getReadSpace() : 0;
+}
+
+void
+R3Stretcher::recordFrameRatio(int inputConsumed, int outputProduced) {
+    if (inputConsumed <= 0 || outputProduced <= 0) return;
+
+    // Write to circular buffer
+    m_frameHistory[m_frameHistoryHead] = {inputConsumed, outputProduced};
+    m_frameHistoryHead = (m_frameHistoryHead + 1) % kMaxFrameHistory;
+    if (m_frameHistoryCount < kMaxFrameHistory) {
+        m_frameHistoryCount++;
+    }
+}
+
+size_t
+R3Stretcher::getInputFramesForOutputBufferInternal() const {
+    if (m_parameters.channels == 0) return 0;
+
+    int outputBuffered = m_channelData[0]->outbuf->getReadSpace();
+    if (outputBuffered <= 0) return 0;
+
+    int outputRemaining = outputBuffered;
+    size_t inputFrames = 0;
+
+    // Walk backwards through frame history (newest to oldest)
+    // to find which input frames correspond to the buffered output
+    for (size_t i = 0; i < m_frameHistoryCount && outputRemaining > 0; ++i) {
+        // Get entry from newest to oldest
+        size_t idx = (m_frameHistoryHead + kMaxFrameHistory - 1 - i) % kMaxFrameHistory;
+        const FrameRatio &frame = m_frameHistory[idx];
+
+        if (frame.outputProduced <= outputRemaining) {
+            // This entire frame is in the output buffer
+            outputRemaining -= frame.outputProduced;
+            inputFrames += frame.inputConsumed;
+        } else {
+            // Only part of this frame is in the output buffer
+            // Interpolate proportionally
+            double fraction = static_cast<double>(outputRemaining) / frame.outputProduced;
+            inputFrames += static_cast<size_t>(frame.inputConsumed * fraction);
+            outputRemaining = 0;
+        }
+    }
+
+    // If we still have unaccounted output (history exhausted), use current ratio
+    if (outputRemaining > 0) {
+        double ratio = getEffectiveRatio();
+        if (ratio > 0) {
+            inputFrames += static_cast<size_t>(outputRemaining / ratio);
+        }
+    }
+
+    return inputFrames;
+}
+
+size_t
+R3Stretcher::getInputFramesForOutputBuffer() const {
+    return getInputFramesForOutputBufferInternal();
 }
 
 void
@@ -1147,7 +1214,10 @@ R3Stretcher::consume(bool final)
 
         m_consumedInputDuration += advanceCount;
         m_totalOutputDuration += writeCount;
-        
+
+        // Record this frame's input/output ratio for accurate sync tracking
+        recordFrameRatio(advanceCount, writeCount);
+
         if (m_startSkip > 0) {
             int rs = cd0->outbuf->getReadSpace();
             int toSkip = std::min(m_startSkip, rs);

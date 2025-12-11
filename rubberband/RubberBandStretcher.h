@@ -867,11 +867,30 @@ public:
     
     
     /**
-     Number of samples in the input buffer
+     * Return the number of input sample frames that are currently
+     * buffered within the stretcher's input buffer, waiting to be
+     * processed. This does not include samples that have already
+     * been processed and are waiting in the output buffer.
      */
     size_t getInputFramesBuffered() const;
 
-    
+    /**
+     * Return the number of input sample frames that correspond to
+     * the samples currently buffered in the stretcher's output buffer.
+     * This uses internal frame-level tracking to accurately map
+     * output samples back to their source input positions, even when
+     * the time ratio has been changing.
+     *
+     * Combined with getInputFramesBuffered(), this allows calculating
+     * the total "latency" in terms of input samples:
+     * totalBuffered = getInputFramesBuffered() + getInputFramesForOutputBuffer()
+     *
+     * This is particularly useful for synchronization when the stretch
+     * ratio changes dynamically, as it tracks the actual input/output
+     * relationship rather than using the current ratio for conversion.
+     */
+    size_t getInputFramesForOutputBuffer() const;
+
     /**
      * Provide a set of mappings from "before" to "after" sample
      * numbers so as to enforce a particular stretch profile.  The
