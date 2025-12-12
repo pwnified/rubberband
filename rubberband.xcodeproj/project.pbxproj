@@ -389,7 +389,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = Harmonicdog;
 				TargetAttributes = {
 					A47BA1F71CE3265300AC1507 = {
@@ -494,8 +494,13 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
+					"NO_TIMING=1",
+					"NO_THREADING=1",
+					"NO_THREAD_CHECKS=1",
+					"USE_BQRESAMPLER=1",
+					"HAVE_VDSP=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
@@ -567,7 +572,15 @@
 				GCC_C_LANGUAGE_STANDARD = c17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					NDEBUG,
+					"NO_TIMING=1",
+					"NO_THREADING=1",
+					"NO_THREAD_CHECKS=1",
+					"USE_BQRESAMPLER=1",
+					"HAVE_VDSP=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
