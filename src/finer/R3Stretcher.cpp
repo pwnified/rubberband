@@ -156,6 +156,10 @@ R3Stretcher::initialise()
     m_frameHistory.resize(kMaxFrameHistory);
     m_frameHistoryHead = 0;
     m_frameHistoryCount = 0;
+    m_frameHistoryTail = 0;
+    m_frameHistoryTailConsumed = 0;
+    m_frameHistoryRunningInput = 0;
+    m_frameHistoryRunningOutput = 0;
 
     calculateHop();
 
@@ -572,6 +576,10 @@ R3Stretcher::reset()
     // Clear frame history for input/output tracking
     m_frameHistoryHead = 0;
     m_frameHistoryCount = 0;
+    m_frameHistoryTail = 0;
+    m_frameHistoryTailConsumed = 0;
+    m_frameHistoryRunningInput = 0;
+    m_frameHistoryRunningOutput = 0;
 
     m_mode = ProcessMode::JustCreated;
 
@@ -658,11 +666,47 @@ void
 R3Stretcher::recordFrameRatio(int inputConsumed, int outputProduced) {
     if (inputConsumed <= 0 || outputProduced <= 0) return;
 
+    if (m_frameHistoryCount >= kMaxFrameHistory) {
+        // About to overwrite the entry at m_frameHistoryHead.
+        // If tail is here, evict it from the active window.
+        if (m_frameHistoryTail == m_frameHistoryHead) {
+            const auto &old = m_frameHistory[m_frameHistoryTail];
+            m_frameHistoryRunningOutput -= old.outputProduced;
+            m_frameHistoryRunningInput -= old.inputConsumed;
+            m_frameHistoryTail = (m_frameHistoryTail + 1) % kMaxFrameHistory;
+            m_frameHistoryTailConsumed = 0;
+        }
+    }
+
     // Write to circular buffer
     m_frameHistory[m_frameHistoryHead] = {inputConsumed, outputProduced};
     m_frameHistoryHead = (m_frameHistoryHead + 1) % kMaxFrameHistory;
     if (m_frameHistoryCount < kMaxFrameHistory) {
         m_frameHistoryCount++;
+    }
+
+    m_frameHistoryRunningOutput += outputProduced;
+    m_frameHistoryRunningInput += inputConsumed;
+}
+
+void
+R3Stretcher::advanceFrameHistoryTail(int outputConsumed) const {
+    while (outputConsumed > 0 && m_frameHistoryTail != m_frameHistoryHead) {
+        const auto &entry = m_frameHistory[m_frameHistoryTail];
+        int tailRemaining = entry.outputProduced - m_frameHistoryTailConsumed;
+
+        if (outputConsumed >= tailRemaining) {
+            // Fully consume this tail entry
+            outputConsumed -= tailRemaining;
+            m_frameHistoryRunningOutput -= entry.outputProduced;
+            m_frameHistoryRunningInput -= entry.inputConsumed;
+            m_frameHistoryTail = (m_frameHistoryTail + 1) % kMaxFrameHistory;
+            m_frameHistoryTailConsumed = 0;
+        } else {
+            // Partially consume tail entry
+            m_frameHistoryTailConsumed += outputConsumed;
+            outputConsumed = 0;
+        }
     }
 }
 
@@ -673,34 +717,31 @@ R3Stretcher::getInputFramesForOutputBufferInternal() const {
     int outputBuffered = m_channelData[0]->outbuf->getReadSpace();
     if (outputBuffered <= 0) return 0;
 
-    int outputRemaining = outputBuffered;
-    size_t inputFrames = 0;
-
-    // Walk backwards through frame history (newest to oldest)
-    // to find which input frames correspond to the buffered output
-    for (size_t i = 0; i < m_frameHistoryCount && outputRemaining > 0; ++i) {
-        // Get entry from newest to oldest
-        size_t idx = (m_frameHistoryHead + kMaxFrameHistory - 1 - i) % kMaxFrameHistory;
-        const FrameRatio &frame = m_frameHistory[idx];
-
-        if (frame.outputProduced <= outputRemaining) {
-            // This entire frame is in the output buffer
-            outputRemaining -= frame.outputProduced;
-            inputFrames += frame.inputConsumed;
-        } else {
-            // Only part of this frame is in the output buffer
-            // Interpolate proportionally
-            double fraction = static_cast<double>(outputRemaining) / frame.outputProduced;
-            inputFrames += static_cast<size_t>(frame.inputConsumed * fraction);
-            outputRemaining = 0;
-        }
+    // Reconcile: advance tail past any output consumed since last call
+    int trackedOutput = m_frameHistoryRunningOutput - m_frameHistoryTailConsumed;
+    if (trackedOutput > outputBuffered) {
+        advanceFrameHistoryTail(trackedOutput - outputBuffered);
+        trackedOutput = m_frameHistoryRunningOutput - m_frameHistoryTailConsumed;
     }
 
-    // If we still have unaccounted output (history exhausted), use current ratio
-    if (outputRemaining > 0) {
+    // Input for all full entries in the active window
+    size_t inputFrames = m_frameHistoryRunningInput;
+
+    // Subtract proportional input for the consumed part of the tail entry
+    if (m_frameHistoryTailConsumed > 0 &&
+        m_frameHistoryTail != m_frameHistoryHead) {
+        const auto &tail = m_frameHistory[m_frameHistoryTail];
+        double fraction =
+            static_cast<double>(m_frameHistoryTailConsumed) / tail.outputProduced;
+        inputFrames -= static_cast<size_t>(tail.inputConsumed * fraction);
+    }
+
+    // If buffered output exceeds what history tracks, use current ratio
+    if (outputBuffered > trackedOutput) {
         double ratio = getEffectiveRatio();
         if (ratio > 0) {
-            inputFrames += static_cast<size_t>(outputRemaining / ratio);
+            inputFrames += static_cast<size_t>(
+                (outputBuffered - trackedOutput) / ratio);
         }
     }
 

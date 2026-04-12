@@ -365,7 +365,17 @@ protected:
     size_t m_frameHistoryHead = 0;   // Next write position (circular)
     size_t m_frameHistoryCount = 0;  // Number of valid entries
 
+    // Tail tracking for O(1) input-frames-for-output-buffer queries.
+    // Mutable because getInputFramesForOutputBufferInternal (const)
+    // reconciles consumed output by advancing the tail — consistent
+    // with retrieve() mutating outbuf through a const method.
+    mutable size_t m_frameHistoryTail = 0;       // Oldest unconsumed entry
+    mutable int m_frameHistoryTailConsumed = 0;  // Output samples consumed from tail entry
+    mutable int m_frameHistoryRunningInput = 0;  // Total input in active window (full entries)
+    mutable int m_frameHistoryRunningOutput = 0; // Total output in active window (full entries)
+
     void recordFrameRatio(int inputConsumed, int outputProduced);
+    void advanceFrameHistoryTail(int outputConsumed) const;
     size_t getInputFramesForOutputBufferInternal() const;
 
     enum class ProcessMode {
