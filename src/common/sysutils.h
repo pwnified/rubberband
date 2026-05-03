@@ -115,8 +115,6 @@ struct timeval { long tv_sec; long tv_usec; };
 void gettimeofday(struct timeval *p, void *tz);
 #endif // _WIN32
 
-using std::size_t;
-
 } // end namespace
 
 #endif
