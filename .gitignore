@@ -2,3 +2,5 @@ rubberband.xcodeproj/project.xcworkspace
 rubberband.xcodeproj/xcuserdata
 rubberband.xcodeproj/xcshareddata
 src/.DS_Store
+build
+.DS_Store
