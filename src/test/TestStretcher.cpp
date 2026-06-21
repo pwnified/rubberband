@@ -321,6 +321,59 @@ static vector<float> process_realtime(RubberBandStretcher &stretcher,
     return out;
 }
 
+BOOST_AUTO_TEST_CASE(input_frame_tracking_after_ratio_change_realtime_finer)
+{
+    int rate = 48000;
+    int blocksize = 1024;
+    RubberBandStretcher stretcher
+        (rate, 1,
+         RubberBandStretcher::OptionEngineFiner |
+         RubberBandStretcher::OptionProcessRealTime |
+         RubberBandStretcher::OptionPitchHighConsistency);
+
+    stretcher.setMaxProcessSize(blocksize);
+
+    vector<float> in(blocksize * 4, 0.f), out(blocksize * 8, 0.f);
+    float *inp = in.data(), *outp = out.data();
+
+    for (int i = 0; i < 2600; ++i) {
+        if (i == 700) {
+            stretcher.setTimeRatio(1.75);
+        } else if (i == 1400) {
+            stretcher.setTimeRatio(0.65);
+        } else if (i == 2100) {
+            stretcher.setTimeRatio(1.25);
+        }
+
+        int guard = 0;
+        while (stretcher.available() <= 1 && guard++ < 8) {
+            int required = int(stretcher.getSamplesRequired());
+            if (required <= 0) required = blocksize;
+            int toProcess = std::min(required, int(in.size()));
+            stretcher.process(&inp, toProcess, false);
+        }
+
+        int available = stretcher.available();
+        BOOST_TEST(available > 1);
+        if (available <= 1) continue;
+
+        size_t before = stretcher.getInputFramesForOutputBuffer();
+        BOOST_TEST(before < 65536u);
+
+        int toRetrieve = available - 1;
+        size_t got = stretcher.retrieve(&outp, toRetrieve);
+        BOOST_TEST(got == size_t(toRetrieve));
+
+        size_t after = stretcher.getInputFramesForOutputBuffer();
+        BOOST_TEST(after <= before);
+        BOOST_TEST(after < 8192u);
+
+        got = stretcher.retrieve(&outp, 1);
+        BOOST_TEST(got == 1u);
+        BOOST_TEST(stretcher.getInputFramesForOutputBuffer() == 0u);
+    }
+}
+
 static void sinusoid_realtime(RubberBandStretcher::Options options,
                               double timeRatio,
                               double pitchScale,

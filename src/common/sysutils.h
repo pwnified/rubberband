@@ -95,6 +95,7 @@
 #  include <stdint.h>
 #else
 #  include <stdint.h>
+#  include <cstddef>
 #endif
 
 #include <math.h>
@@ -114,6 +115,8 @@ extern bool system_is_multiprocessor();
 struct timeval { long tv_sec; long tv_usec; };
 void gettimeofday(struct timeval *p, void *tz);
 #endif // _WIN32
+
+using std::size_t;
 
 } // end namespace
 

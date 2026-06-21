@@ -363,7 +363,7 @@ protected:
     static constexpr size_t kMaxFrameHistory = 2048;  // Enough for max output buffering
     std::vector<FrameRatio> m_frameHistory;
     size_t m_frameHistoryHead = 0;   // Next write position (circular)
-    size_t m_frameHistoryCount = 0;  // Number of valid entries
+    mutable size_t m_frameHistoryCount = 0;  // Number of valid active entries
 
     // Tail tracking for O(1) input-frames-for-output-buffer queries.
     // Mutable because getInputFramesForOutputBufferInternal (const)
