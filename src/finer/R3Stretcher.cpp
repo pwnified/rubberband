@@ -659,7 +659,22 @@ R3Stretcher::getSamplesRequired() const
 
 size_t
 R3Stretcher::getInputFramesBuffered() const {
-    return m_parameters.channels > 0 ? m_channelData[0]->inbuf->getReadSpace() : 0;
+    if (m_parameters.channels == 0) return 0;
+
+    int rs = m_channelData[0]->inbuf->getReadSpace();
+    if (rs <= 0) return 0;
+
+    // When the pitch shift is applied before the stretcher, the input buffer
+    // holds post-resampler frames rather than input frames. Scale back so this
+    // returns input frames as documented - getSamplesRequired() converts in the
+    // opposite direction for the same reason.
+    bool resamplingBefore = false;
+    areWeResampling(&resamplingBefore, nullptr);
+    if (resamplingBefore) {
+        return size_t(round(double(rs) * m_pitchScale));
+    }
+
+    return size_t(rs);
 }
 
 void
@@ -748,9 +763,12 @@ R3Stretcher::getInputFramesForOutputBufferInternal() const {
         inputFrames = consumedInput < inputFrames ? inputFrames - consumedInput : 0;
     }
 
-    // If buffered output exceeds what history tracks, use current ratio
+    // If buffered output exceeds what history tracks, use current ratio.
+    // Output frames per input frame is the time ratio alone: whichever side of
+    // the stretcher it runs on, the pitch resampler undoes the extra stretch
+    // that getEffectiveRatio() folds in, leaving duration unchanged.
     if (outputBuffered > trackedOutput) {
-        double ratio = getEffectiveRatio();
+        double ratio = m_timeRatio;
         if (ratio > 0) {
             inputFrames += static_cast<size_t>(
                 (outputBuffered - trackedOutput) / ratio);
@@ -1084,8 +1102,9 @@ R3Stretcher::consume(bool final)
     int channels = m_parameters.channels;
     int inhop = m_inhop;
 
+    bool resamplingBefore = false;
     bool resamplingAfter = false;
-    areWeResampling(nullptr, &resamplingAfter);
+    areWeResampling(&resamplingBefore, &resamplingAfter);
 
     double effectivePitchRatio = 1.0 / m_pitchScale;
     if (m_resampler) {
@@ -1270,8 +1289,15 @@ R3Stretcher::consume(bool final)
         m_consumedInputDuration += advanceCount;
         m_totalOutputDuration += writeCount;
 
-        // Record this frame's input/output ratio for accurate sync tracking
-        recordFrameRatio(advanceCount, writeCount);
+        // Record this frame's input/output ratio for accurate sync tracking.
+        // advanceCount counts input-buffer frames, which are post-resampler
+        // when we resample before the stretcher - convert first so the history
+        // stays in the input frames getInputFramesForOutputBuffer() reports.
+        int recordedInput = advanceCount;
+        if (resamplingBefore) {
+            recordedInput = int(round(double(advanceCount) * m_pitchScale));
+        }
+        recordFrameRatio(recordedInput, writeCount);
 
         if (m_startSkip > 0) {
             int rs = cd0->outbuf->getReadSpace();
